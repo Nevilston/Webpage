@@ -470,54 +470,6 @@
       opacity: 1;
     }
 
-    .ticker {
-      background: #fff;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .ticker-inner {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 24px;
-      width: 100%;
-    }
-
-    .ticker-label {
-      background: var(--gold);
-      color: #fff;
-      padding: 6px 12px;
-      font-size: 12px;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      white-space: nowrap;
-    }
-
-    .ticker-track {
-      position: relative;
-      overflow: hidden;
-      flex: 1;
-    }
-
-    .ticker-text {
-      display: inline-block;
-      white-space: nowrap;
-      padding-left: 100%;
-      animation: ticker 80s linear infinite;
-      font-size: 13px;
-      color: var(--navy);
-    }
-
-    .ticker-track:hover .ticker-text {
-      animation-play-state: paused;
-    }
-
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-
     .banner-actions {
       margin-top: 18px;
       display: flex;
@@ -1159,8 +1111,6 @@
             <i class="fa fa-caret-down" aria-hidden="true"></i>
           </button>
           <ul id="knowledge-bank-menu" class="submenu">
-            <li><a href="knowledge-bank.html#tax-calculator">Tax Calculator</a></li>
-            <li><a href="knowledge-bank.html#acts">ACTS</a></li>
             <li><a href="knowledge-bank.html#income-tax-2025">Income Tax 2025</a></li>
             <li><a href="knowledge-bank.html#gst-laws">GST Laws</a></li>
           </ul>
@@ -1228,17 +1178,6 @@
         </div>
       </div>
     </section>
-
-    <section class="ticker">
-      <div class="ticker-inner">
-        <div class="ticker-label">Important Dates</div>
-        <div class="ticker-track">
-          <div class="ticker-text">Issue of TDS Certificate u/s 194-IA for TDS deducted on Purchase of Property in December: 14/02/2026 | Issue of TDS Certificate for tax deducted on rent above 50,000 pm by certain individuals/HUF under Section 194-IB where lease has terminated in December: 14/02/2026 | Issue of TDS Certificate for tax deducted u/s 194M on certain payments by individual/HUF in December: 14/02/2026 | Issue of TDS Certificate for tax deducted u/s 194S on Virtual Digital Assets in December: 14/02/2026 | Issue of TDS certificates other than salary for Q3 of FY 2025-26: 15/02/2026 | ESI payment for January: 15/02/2026 | E-Payment of PF for January: 15/02/2026 | Details of Deposit of TDS/TCS of January by book entry by an office of the Government: 15/02/2026 | Online application for CAG Empanelment of CA firms/LLPs for FY 2025-26: 17/02/2026 | Monthly Return by persons outside India providing online information and data base access or retrieval services, for January. Also to be filed by every registered person providing online money gaming from a place outside India to a person in India: 20/02/2026 | Add/amend particulars (other than GSTIN) in GSTR-1 of Jan. It can be filed after filing of GSTR-1 but before filing corresponding GSTR-3B: 20/02/2026 | Summary Return cum Payment of Tax for January by Monthly filers (other than QRMP): 20/02/2026 | Deposit of GST of January under QRMP scheme: 25/02/2026 | Return by persons with Unique Identification Number (UIN) like embassies etc to get refund under GST for goods and services purchased by them, for January: 28/02/2026 | Submit hard copy of acknowledgement and supporting documents for CAG Empanelment of CA firms/LLPs for FY 2025-26, after online application: 28/02/2026</div>
-        </div>
-      </div>
-    </section>
-
-    
 
     <section id="industry" class="section industry-section reveal">
       <div class="container">
@@ -1410,8 +1349,6 @@
           <div>
             <h3 class="sub-heading">Knowledge Bank</h3>
             <ul class="list">
-              <li>Tax Calculator</li>
-              <li>ACTS</li>
               <li>Income Tax 2025</li>
               <li>GST Laws</li>
             </ul>

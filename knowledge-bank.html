@@ -232,48 +232,13 @@
       font-weight: 600;
     }
 
-    .tax-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr auto;
-      gap: 10px;
-      align-items: end;
-      margin-bottom: 12px;
-    }
-
-    .tax-output {
-      border: 1px solid #cbd4e0;
-      background: #f8fafc;
-      padding: 12px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(180px, 1fr));
-      gap: 10px;
-    }
-
-    .tax-output p {
-      margin: 0;
-      font-size: 13px;
-      color: #5a6474;
-    }
-
-    .tax-output strong {
-      display: block;
-      margin-top: 4px;
-      font-size: 18px;
-      color: var(--navy);
-    }
-
     .empty {
       color: #7a8598;
       font-style: italic;
     }
 
     @media (max-width: 900px) {
-      .search-grid,
-      .tax-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tax-output {
+      .search-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -299,8 +264,6 @@
   <nav class="kb-nav">
     <div class="container">
       <ul>
-        <li><a href="#tax-calculator">Tax Calculator</a></li>
-        <li><a href="#acts">ACTS</a></li>
         <li><a href="#income-tax-2025">Income Tax 2025</a></li>
         <li><a href="#gst-laws">GST Laws</a></li>
       </ul>
@@ -309,79 +272,6 @@
 
   <main class="container">
     <p class="page-intro">Internal Knowledge Bank page in this application. Use search by section/rule number and content.</p>
-
-    <section id="tax-calculator" class="module">
-      <h2>Tax Calculator</h2>
-      <div class="tax-grid">
-        <div class="field">
-          <label for="tax-year">Assessment Year</label>
-          <select id="tax-year">
-            <option value="2025-26" selected>2025-26</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="tax-regime">Regime</label>
-          <select id="tax-regime">
-            <option value="new">New Regime</option>
-            <option value="old">Old Regime</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="tax-income">Taxable Income (INR)</label>
-          <input id="tax-income" type="number" min="0" step="1000" placeholder="Enter taxable income">
-        </div>
-        <div class="actions">
-          <button id="tax-calc-btn" class="btn" type="button">Calculate</button>
-        </div>
-      </div>
-      <div class="tax-output">
-        <div>
-          <p>Tax Before Cess</p>
-          <strong id="tax-before-cess">INR 0</strong>
-        </div>
-        <div>
-          <p>Health &amp; Education Cess (4%)</p>
-          <strong id="tax-cess">INR 0</strong>
-        </div>
-        <div>
-          <p>Total Tax Liability</p>
-          <strong id="tax-total">INR 0</strong>
-        </div>
-      </div>
-      <p class="result-line">Note: Calculation is indicative for quick internal reference.</p>
-    </section>
-
-    <section id="acts" class="module">
-      <h2>ACTS</h2>
-      <div class="search-grid">
-        <div class="field">
-          <label for="acts-section">Section / Rule Number</label>
-          <input id="acts-section" type="text" placeholder="Ex: A-1 or Section 139">
-        </div>
-        <div class="field">
-          <label for="acts-content">Content</label>
-          <input id="acts-content" type="text" placeholder="Ex: registration">
-        </div>
-        <div class="actions">
-          <button id="acts-search" class="btn" type="button">Search</button>
-        </div>
-        <div class="actions">
-          <button id="acts-reset" class="btn alt" type="button">Reset</button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 220px;">Section / Rule</th>
-              <th>Content</th>
-            </tr>
-          </thead>
-          <tbody id="acts-rows"></tbody>
-        </table>
-      </div>
-      <p id="acts-count" class="result-line"></p>
-    </section>
 
     <section id="income-tax-2025" class="module">
       <h2>Income Tax 2025</h2>
@@ -449,17 +339,9 @@
   </main>
 
   <script>
-    const actsData = [
-      { section: "A-1", content: "Short title, application and commencement." },
-      { section: "A-2", content: "Definitions and interpretation for key statutory terms." },
-      { section: "A-3", content: "Registration, records and maintenance obligations." },
-      { section: "A-4", content: "Compliance timelines, penalties and compounding provisions." },
-      { section: "A-5", content: "Authorities, powers of inspection and appellate process." }
-    ];
-
     const incomeTax2025Data = [
-      { section: "115BAC", content: "Default tax regime slab rates and conditions for AY 2025-26." },
-      { section: "87A", content: "Rebate eligibility subject to taxable income thresholds." },
+      { section: "115BAC", content: "Default tax regime slab rates and conditions for AY 2026-27 (FY 2025-26)." },
+      { section: "87A", content: "Rebate: taxable income up to INR 12,00,000 effectively tax-free (new regime); up to INR 5,00,000 (old regime)." },
       { section: "139(1)", content: "Due date rules for filing return of income." },
       { section: "194C", content: "TDS on payments to contractors and subcontractors." },
       { section: "80C", content: "Deductions on qualifying investments up to prescribed limits." },
@@ -474,52 +356,6 @@
       { section: "Rule 36", content: "Documentary conditions for availing input tax credit." },
       { section: "Rule 59", content: "Outward supply details and GSTR-1 filing framework." }
     ];
-
-    function formatInr(value) {
-      return "INR " + Math.round(value).toLocaleString("en-IN");
-    }
-
-    function calculateTaxBySlab(income, slabs) {
-      let tax = 0;
-      for (const slab of slabs) {
-        if (income <= slab.min) {
-          continue;
-        }
-        const taxableInSlab = Math.min(income, slab.max) - slab.min;
-        tax += taxableInSlab * slab.rate;
-      }
-      return Math.max(tax, 0);
-    }
-
-    function calculateTax() {
-      const income = Number(document.getElementById("tax-income").value) || 0;
-      const regime = document.getElementById("tax-regime").value;
-
-      const oldRegime = [
-        { min: 0, max: 250000, rate: 0 },
-        { min: 250000, max: 500000, rate: 0.05 },
-        { min: 500000, max: 1000000, rate: 0.2 },
-        { min: 1000000, max: Number.MAX_SAFE_INTEGER, rate: 0.3 }
-      ];
-
-      const newRegime = [
-        { min: 0, max: 300000, rate: 0 },
-        { min: 300000, max: 600000, rate: 0.05 },
-        { min: 600000, max: 900000, rate: 0.1 },
-        { min: 900000, max: 1200000, rate: 0.15 },
-        { min: 1200000, max: 1500000, rate: 0.2 },
-        { min: 1500000, max: Number.MAX_SAFE_INTEGER, rate: 0.3 }
-      ];
-
-      const slabs = regime === "old" ? oldRegime : newRegime;
-      const taxBeforeCess = calculateTaxBySlab(income, slabs);
-      const cess = taxBeforeCess * 0.04;
-      const total = taxBeforeCess + cess;
-
-      document.getElementById("tax-before-cess").textContent = formatInr(taxBeforeCess);
-      document.getElementById("tax-cess").textContent = formatInr(cess);
-      document.getElementById("tax-total").textContent = formatInr(total);
-    }
 
     function renderRows(tableBodyId, rows) {
       const tbody = document.getElementById(tableBodyId);
@@ -573,18 +409,7 @@
       });
     }
 
-    document.getElementById("tax-calc-btn").addEventListener("click", calculateTax);
     document.getElementById("go-back").addEventListener("click", () => window.history.back());
-
-    bindTableSearch({
-      data: actsData,
-      tableBodyId: "acts-rows",
-      sectionInputId: "acts-section",
-      contentInputId: "acts-content",
-      searchBtnId: "acts-search",
-      resetBtnId: "acts-reset",
-      countId: "acts-count"
-    });
 
     bindTableSearch({
       data: incomeTax2025Data,
@@ -605,8 +430,6 @@
       resetBtnId: "gst-reset",
       countId: "gst-count"
     });
-
-    calculateTax();
   </script>
 </body>
 </html>
